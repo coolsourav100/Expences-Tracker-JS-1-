@@ -12,15 +12,29 @@ form.addEventListener('submit',(e)=>{
  'des':des,
  'cat':cat
   }
-  // console.log(obj)
   
   window.localStorage.setItem(obj.name, JSON.stringify(obj))
-  showOndisplay(obj)
+  showOndisplay()
   
 })
-function showOndisplay(obj){
+
+// Refresh on the screen
+window.addEventListener("DOMContentLoaded",()=>{
+showOndisplay()
+})
+
+function showOndisplay(){
+  let list = document.getElementById('item')
+  while (list.lastChild) {
+    list.removeChild(list.lastChild);
+  }
+  let localdata = Object.keys(localStorage)
+localdata.forEach((ele)=>{
+  let object = window.localStorage.getItem(ele)
+  let obj =JSON.parse(object)
   let list = document.getElementById('item')
   let li = document.createElement('li');
+  li.className = "list-group-item"
   li.textContent = `Name : ${obj.name}  Expences Amount : ${obj.amount}  Descriptation :${obj.des} Catagory : ${obj.cat}`
   // create Delete Button
   let deletebutton = document.createElement('button');
@@ -49,4 +63,5 @@ function showOndisplay(obj){
   li.appendChild(editbtn)
   li.appendChild(deletebutton)
   list.appendChild(li)
+})
 }
